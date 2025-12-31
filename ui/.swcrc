@@ -1,0 +1,13 @@
+{
+  "$schema": "https://swc.rs/schema.json",
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    },
+    "transform": { "react": { "runtime": "automatic" } },
+    "target": "esnext"
+  },
+  "exclude": ["node_modules"],
+  "minify": false
+}

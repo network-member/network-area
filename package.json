@@ -4,21 +4,34 @@
   "description": "The place where my pet projects live 🐼",
   "version": "1.0.0",
   "type": "module",
-  "license": "ISC",
+  "license": "MIT",
   "workspaces": [
-    "api"
+    "api",
+    "ui"
   ],
   "scripts": {
     "api:start": "npm run start:dev --workspace=api",
+    "ui:start": "npm run start:dev --workspace=ui",
     "docker:up": "docker compose down && docker compose up -d",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "lint": "eslint ."
   },
   "engines": {
     "node": "24.11.1"
   },
   "devDependencies": {
+    "@types/node": "^24.1.0",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.0",
+    "cspell": "^9.4.0",
     "eslint": "^9.39.2",
+    "eslint-config-love": "^140.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^16.5.0",
     "prettier": "^3.7.4",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.51.0"
   }
 }

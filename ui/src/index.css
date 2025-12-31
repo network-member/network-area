@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Gluten';
+  src: url('./fonts/Gluten-VariableFont-wght.ttf') format('ttf');
+}
+
+#root {
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  font-family: Gluten, cursive;
+  font-size: 14px;
+}
+
+input,
+textarea,
+button {
+  font-family: inherit;
+}
+
+* {
+  box-sizing: border-box;
+}

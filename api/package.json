@@ -1,11 +1,10 @@
 {
-  "name": "network-are-api",
+  "name": "network-area-api",
   "version": "1.0.0",
   "type": "module",
   "author": "Vladislav Kazantsev",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
-    "playground": "tsx src/playground.ts",
     "start:dev": "tsx watch --env-file=.env src/server.ts",
     "build": "rimraf ./build && tsc && tsc-alias",
     "start": "node --enable-source-maps --env-file=.env build/server.js",
@@ -25,18 +24,11 @@
     "zod": "^4.2.1"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^6.0.0",
     "@types/cookie-parser": "^1.4.10",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^25.0.3",
-    "eslint-config-love": "^140.0.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.4",
-    "globals": "^16.5.0",
     "rimraf": "^6.1.2",
     "tsc-alias": "^1.8.16",
-    "tsx": "^4.21.0",
-    "typescript-eslint": "^8.51.0"
+    "tsx": "^4.21.0"
   }
 }
