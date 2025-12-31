@@ -1,0 +1,24 @@
+{
+  "author": "Vladislav Kazantsev",
+  "name": "network-area-monorepo",
+  "description": "The place where my pet projects live 🐼",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "ISC",
+  "workspaces": [
+    "api"
+  ],
+  "scripts": {
+    "api:start": "npm run start:dev --workspace=api",
+    "docker:up": "docker compose down && docker compose up -d",
+    "format": "prettier --write ."
+  },
+  "engines": {
+    "node": "24.11.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.2",
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3"
+  }
+}

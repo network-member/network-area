@@ -1,0 +1,29 @@
+name: 'network-area'
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: network-area
+    ports:
+      - 5432:5432
+    volumes:
+      # - postgres_data:/var/lib/postgresql/data
+      - ./api/seeds:/docker-entrypoint-initdb.d
+  redis:
+    image: redis:8-alpine
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    ports:
+      - 6379:6379
+    command:
+      - redis-server
+      - --save 60 1
+      - --loglevel warning
+volumes:
+  postgres_data:
+  redis_data:

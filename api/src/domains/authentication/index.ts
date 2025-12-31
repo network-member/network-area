@@ -1,0 +1,1 @@
+export { default as AuthenticationController } from './authentication.controller.js'
