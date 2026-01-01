@@ -13,6 +13,10 @@ export default defineConfig(
   {
     rules: {
       '@typescript-eslint/no-confusing-void-expression': 'off',
+      '@typescript-eslint/no-misused-promises': [
+        'error',
+        { checksVoidReturn: false },
+      ],
       '@typescript-eslint/prefer-destructuring': 'off', // false positives, less readable sometimes
       '@typescript-eslint/no-magic-numbers': 'off', // too many false positives
       '@typescript-eslint/init-declarations': 'off', // too many false positives
@@ -48,6 +52,9 @@ export default defineConfig(
     },
     languageOptions: {
       globals: globals.browser,
+    },
+    rules: {
+      'no-alert': 'off',
     },
   }
 );
