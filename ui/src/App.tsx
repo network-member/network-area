@@ -3,7 +3,7 @@ import type { FC } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 
-import SignUpPage from './pages/SignUp'
+import ApplicationRouter from './pages'
 
 const theme = createTheme({
   palette: {
@@ -15,7 +15,7 @@ const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline enableColorScheme />
-      <SignUpPage />
+      <ApplicationRouter />
     </ThemeProvider>
   )
 }

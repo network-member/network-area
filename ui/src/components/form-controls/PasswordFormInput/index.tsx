@@ -22,7 +22,7 @@ const PasswordFormInput = <
       placeholder="**************"
       onBlur={() => {
         props.formManagerState.field.onBlur()
-        setShowPassword(!showPassword)
+        setShowPassword(false)
       }}
       slotProps={{
         input: {

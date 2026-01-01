@@ -15,7 +15,7 @@ import Logo from '@/icons/logo.svg'
 
 import FormFields, { FieldsValidationSchema, type FormFieldsT } from './components/FormFields'
 
-const SignUp: FC = () => {
+const SignIn: FC = () => {
   const { control, handleSubmit } = useForm({
     resolver: zodResolver(FieldsValidationSchema),
   })
@@ -34,7 +34,7 @@ const SignUp: FC = () => {
           variant="h4"
           sx={{ fontSize: 'clamp(2rem, 10vw, 2.15rem)', lineHeight: 1.5 }}
         >
-          Sign up
+          Sign in
         </Typography>
       </Stack>
       <Box
@@ -44,7 +44,7 @@ const SignUp: FC = () => {
       >
         <FormFields control={control} />
         <Button type="submit" fullWidth variant="contained">
-          Sign up
+          Sign in
         </Button>
       </Box>
       <Divider>
@@ -57,17 +57,17 @@ const SignUp: FC = () => {
           onClick={() => alert('Sign up with Google')}
           startIcon={<GoogleIcon />}
         >
-          Sign up with Google
+          Sign in with Google
         </Button>
         <Typography sx={{ textAlign: 'center' }}>
-          Already have an account?{' '}
+          Don't have an account?{' '}
           <Link
             component={RouterLink}
-            to="/sign-in"
+            to="/sign-up"
             variant="body2"
             sx={{ alignSelf: 'center', fontWeight: 'bold' }}
           >
-            Sign in
+            Sign up
           </Link>
         </Typography>
       </Box>
@@ -75,4 +75,4 @@ const SignUp: FC = () => {
   )
 }
 
-export default SignUp
+export default SignIn
