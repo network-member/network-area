@@ -2,6 +2,7 @@ import type { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import Zod from 'zod'
 
+import { config } from 'config.js'
 import { UserService } from 'domains/user/index.js'
 import { UnauthorizedApiError, validateApiRoutePayload } from 'errors/index.js'
 
@@ -11,7 +12,7 @@ const authPayloadValidationSchema = Zod.object({ email: Zod.email(), password: Z
 
 const refreshTokenCookiePayload = {
   httpOnly: true,
-  secure: true,
+  secure: config.productionEnv,
   sameSite: 'strict',
   maxAge: RefreshTokenTTL * 1000,
   path: '/auth/session',

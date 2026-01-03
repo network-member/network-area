@@ -1,3 +1,4 @@
+//@ts-check
 import CopyPlugin from 'copy-webpack-plugin'
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
 import Dotenv from 'dotenv-webpack'
@@ -10,7 +11,8 @@ import path from 'node:path'
 import svgoConfig from './svgo.config.mjs'
 
 /**
- * @type {(args: {production: boolean}) => import("webpack").Configuration}
+ * @typedef {import("webpack").Configuration & {devServer: import("webpack-dev-server").Configuration}} WebpackConfig
+ * @type {(args: {production: boolean}) => WebpackConfig}
  */
 const config = (env) => ({
   mode: env.production ? 'production' : 'development',
@@ -34,6 +36,7 @@ const config = (env) => ({
   devServer: {
     port: 3000,
     historyApiFallback: true,
+    allowedHosts: 'all',
     client: {
       overlay: {
         errors: false,

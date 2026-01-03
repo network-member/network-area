@@ -1,9 +1,9 @@
-import type { FC, PropsWithChildren } from 'react'
+import type { FC } from 'react'
 import { Outlet } from 'react-router'
 
 import { Card, SignUpContainer } from './styled'
 
-const LoginLayout: FC<PropsWithChildren> = ({ children }) => {
+const LoginLayout: FC = () => {
   return (
     <SignUpContainer>
       <Card variant="outlined">

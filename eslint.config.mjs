@@ -1,7 +1,9 @@
-import lovePreset from 'eslint-config-love';
-import prettier from 'eslint-plugin-prettier/recommended';
-import { defineConfig } from 'eslint/config';
-import globals from 'globals';
+import lovePreset from 'eslint-config-love'
+import prettier from 'eslint-plugin-prettier/recommended'
+import { defineConfig } from 'eslint/config'
+import globals from 'globals'
+import reactPlugin from 'eslint-plugin-react'
+import reactHooks from 'eslint-plugin-react-hooks'
 
 export default defineConfig(
   lovePreset,
@@ -13,10 +15,7 @@ export default defineConfig(
   {
     rules: {
       '@typescript-eslint/no-confusing-void-expression': 'off',
-      '@typescript-eslint/no-misused-promises': [
-        'error',
-        { checksVoidReturn: false },
-      ],
+      '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: false }],
       '@typescript-eslint/prefer-destructuring': 'off', // false positives, less readable sometimes
       '@typescript-eslint/no-magic-numbers': 'off', // too many false positives
       '@typescript-eslint/init-declarations': 'off', // too many false positives
@@ -26,6 +25,13 @@ export default defineConfig(
       '@typescript-eslint/no-deprecated': 'off', // false positives, example: chrome namespace
       'promise/avoid-new': 'off', // tooooo opinionated from eslint-config-love
       'no-console': 'off',
+      'no-param-reassign': [
+        'error',
+        {
+          props: true,
+          ignorePropertyModificationsFor: ['req', 'config'],
+        },
+      ],
     },
   },
   {
@@ -33,28 +39,21 @@ export default defineConfig(
     languageOptions: {
       globals: globals.node,
     },
-    rules: {
-      'no-param-reassign': [
-        'error',
-        {
-          props: true,
-          ignorePropertyModificationsFor: ['req'],
-        },
-      ],
-    },
   },
+  { files: ['ui/**/*.{js,mjs,ts,tsx}'], ...reactPlugin.configs.flat.recommended },
   {
     files: ['ui/**/*.{js,mjs,ts,tsx}'],
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
+    ...reactPlugin.configs.flat['jsx-runtime'],
+    settings: { react: { version: 'detect' } },
+  },
+  { files: ['ui/**/*.{js,mjs,ts,tsx}'], ...reactHooks.configs.flat.recommended },
+  {
+    files: ['ui/**/*.{js,mjs,ts,tsx}'],
     languageOptions: {
       globals: globals.browser,
     },
     rules: {
       'no-alert': 'off',
     },
-  }
-);
+  },
+)

@@ -27,8 +27,8 @@ export const RefreshTokenCookieName = 'refreshToken'
 /** 30 минут в секундах */
 const accessTokenTTL = 30 * 60
 
-/** 5 минут в секундах */
-const accessTokenLifetimeGap = 5 * 60
+/** 1 минута в секундах */
+const accessTokenLifetimeGap = 60
 
 async function createTokensPair(
   req: Request,
