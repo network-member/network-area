@@ -3,7 +3,7 @@ import zod from 'zod'
 export type FormFieldsT = zod.infer<typeof FieldsValidationSchema>
 
 export const FieldsValidationSchema = zod
-  .object({
+  .strictObject({
     email: zod.email().trim(),
     firstName: zod.string().trim(),
     lastName: zod.string().trim(),

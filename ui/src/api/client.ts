@@ -22,6 +22,20 @@ const login = async (loginPayload: { email: string; password: string }): Promise
   setAccessTokenToLs(data.accessToken)
 }
 
+const signUp = async (signUpPayload: {
+  email: string
+  firstName: string
+  lastName: string
+  password: string
+  passwordConfirmation: string
+}): Promise<void> => {
+  const { data } = await axios.post<{ accessToken: string }>('/sign-up', signUpPayload, {
+    ...axiosConfig,
+    withCredentials: true,
+  })
+  setAccessTokenToLs(data.accessToken)
+}
+
 const logout = async (): Promise<void> => {
   await apiClient.post<undefined>('/auth/session/logout', undefined, {
     withCredentials: true,
@@ -34,4 +48,4 @@ const ping = async (): Promise<string> => {
   return data
 }
 
-export default { login, logout, ping }
+export default { login, signUp, logout, ping }

@@ -12,7 +12,7 @@
   "scripts": {
     "api:start": "npm run start:dev --workspace=api",
     "ui:start": "npm run start:dev --workspace=ui",
-    "docker:up": "docker compose down && docker compose up -d",
+    "docker:up": "docker compose down -v && docker compose up -d",
     "format": "prettier --write .",
     "lint": "eslint ."
   },

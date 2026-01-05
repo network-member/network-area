@@ -3,7 +3,10 @@ import { KnexClient } from 'db/index.js'
 export interface UserI {
   id: number
   email: string
+  first_name: string
+  last_name: string
   password: string
+  registration_ip: string
   created_at: string
   updated_at: string
 }

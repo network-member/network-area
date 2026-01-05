@@ -1,25 +1,22 @@
 import type { FC } from 'react'
-import { type SubmitHandler, useForm } from 'react-hook-form'
 import { Link as RouterLink } from 'react-router'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Stack } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
+import FormHelperText from '@mui/material/FormHelperText'
 import Link from '@mui/material/Link'
+import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 
 import GoogleIcon from '@/icons/google.svg'
 import Logo from '@/icons/logo.svg'
 
-import FormFields, { FieldsValidationSchema, type FormFieldsT } from './components/FormFields'
+import FormFields from './components/FormFields'
+import useSignUpForm from './hooks/use-sign-up-form'
 
 const SignUp: FC = () => {
-  const { control, handleSubmit } = useForm({
-    resolver: zodResolver(FieldsValidationSchema),
-  })
-  const onSubmit: SubmitHandler<FormFieldsT> = (data) => console.log(data)
+  const { control, handleSubmit, isSubmitting, submitError } = useSignUpForm()
 
   return (
     <>
@@ -39,11 +36,16 @@ const SignUp: FC = () => {
       </Stack>
       <Box
         component="form"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit}
         sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
       >
         <FormFields control={control} />
-        <Button type="submit" fullWidth variant="contained">
+        {typeof submitError === 'string' && (
+          <FormHelperText sx={{ textAlign: 'center' }} error>
+            {submitError}
+          </FormHelperText>
+        )}
+        <Button type="submit" disabled={isSubmitting} fullWidth variant="contained">
           Sign up
         </Button>
       </Box>

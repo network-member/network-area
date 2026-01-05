@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "start:dev": "webpack serve",
-    "build": "webpack --env production"
+    "build": "webpack --env production",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

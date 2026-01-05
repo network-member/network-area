@@ -56,7 +56,7 @@ async function refreshToken(req: Request): Promise<string> {
   const accessTokenKey = await validateAccessRefreshPair(req, { accessToken, accessTokenPayload })
 
   const now = Math.floor(Date.now() / 1000)
-  if (accessTokenPayload.exp - now < accessTokenLifetimeGap) throw new UnauthorizedApiError()
+  if (accessTokenPayload.exp - now > accessTokenLifetimeGap) throw new UnauthorizedApiError()
 
   const refreshedAccessToken = sign({ userAgent: accessTokenPayload.userAgent, userId: accessTokenPayload.sub })
   await RedisClient.set(accessTokenKey, refreshedAccessToken, { expiration: 'KEEPTTL' })

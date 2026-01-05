@@ -1,1 +1,0 @@
-CREATE DATABASE network_area;
