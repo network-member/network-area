@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises -- process.on typing*/
 import KnexClient from './knex-client.js'
 import RedisClient from './redis-client.js'
 

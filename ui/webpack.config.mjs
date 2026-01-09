@@ -29,6 +29,7 @@ const config = (env) => ({
   output: {
     path: path.resolve(import.meta.dirname, 'build'),
     clean: true,
+    assetModuleFilename: 'static/[contenthash][ext]',
     filename: env.production ? 'static/js/bundle-[fullhash].js' : 'static/js/bundle-[name].js',
     chunkFilename: env.production ? 'static/js/[chunkhash].chunk.js' : 'static/js/[name].chunk.js',
     publicPath: '/',
@@ -95,8 +96,8 @@ const basePlugins = [
 
 const productionPlugins = [
   new MiniCssExtractPlugin({
-    filename: '[name].[contenthash].css',
-    chunkFilename: '[id].[contenthash].css',
+    filename: 'static/css/[name].[contenthash].css',
+    chunkFilename: 'static/css/[id].[contenthash].css',
   }),
   new CopyPlugin({
     patterns: [{ from: 'public', filter: (resourcePath) => !resourcePath.includes('.html') }],

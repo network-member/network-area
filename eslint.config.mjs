@@ -11,7 +11,7 @@ export default defineConfig(
   {
     files: ['**/*.{js,mjs,ts,tsx}'],
   },
-  { ignores: ['**/*.config.mjs'] },
+  { ignores: ['**/*.config.mjs', '**/build'] },
   {
     rules: {
       '@typescript-eslint/no-confusing-void-expression': 'off',

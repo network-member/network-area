@@ -1,0 +1,18 @@
+FROM node:24-alpine AS builder
+WORKDIR /app
+
+COPY package*.json .npmrc eslint.config.mjs ./
+COPY ui/*.json ui/.*rc ui/*config.mjs ./ui/
+COPY ui/src ui/src
+COPY ui/public ui/public
+COPY ui/.env.production ./ui/.env
+
+RUN npm ci
+RUN npm run ui:prebuild
+RUN npm run ui:build
+
+FROM nginx:alpine AS main
+COPY --from=builder /app/ui/build /etc/nginx/ui-assets
+COPY ./nginx /etc/nginx/conf.d
+
+EXPOSE 80 443

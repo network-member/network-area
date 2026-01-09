@@ -1,0 +1,54 @@
+name: 'network-area'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    restart: unless-stopped
+    ports:
+      - 8081:80
+    depends_on:
+      - api
+    networks:
+      - frontend
+  api:
+    # image: network-area-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+    networks:
+      - frontend
+      - backend
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: network-area
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./api/seeds:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+  redis:
+    image: redis:8-alpine
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    command:
+      - redis-server
+      - --requirepass ${DB_PASSWORD}
+    networks:
+      - backend
+volumes:
+  postgres_data:
+  redis_data:
+networks:
+  frontend:
+  backend:

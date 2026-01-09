@@ -11,13 +11,18 @@
   ],
   "scripts": {
     "api:start": "npm run start:dev --workspace=api",
+    "api:build": "npm run build --workspace=api",
+    "api:prebuild": "eslint api/ && npm run check-types --workspace=api",
+    "api:build-image": "docker build -f Dockerfile.api -t network-area-api . && docker save network-area-api > network-area-api.tar",
     "ui:start": "npm run start:dev --workspace=ui",
+    "ui:build": "npm run build --workspace=ui",
+    "ui:prebuild": "eslint ui/ && npm run check-types --workspace=ui",
     "docker:up": "docker compose down -v && docker compose up -d",
     "format": "prettier --write .",
     "lint": "eslint ."
   },
   "engines": {
-    "node": "24.11.1"
+    "node": "24.*"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^6.0.0",
