@@ -1,4 +1,4 @@
-# npm run docker:build
+npm run docker:build
 ssh tw "rm -rf ~/network-area"
 ssh tw "mkdir -p ~/network-area"
 scp docker-compose.production.yml tw:~/network-area/docker-compose.yml
