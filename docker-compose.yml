@@ -1,8 +1,8 @@
-name: 'network-area'
+name: 'network-area-development'
 
 services:
   db:
-    image: postgres:17-alpine
+    image: postgres:18-alpine
     restart: unless-stopped
     environment:
       POSTGRES_USER: admin
