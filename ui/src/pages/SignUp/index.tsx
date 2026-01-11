@@ -9,6 +9,7 @@ import Link from '@mui/material/Link'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 
+import useUpdatePageTitle from '@/hooks/use-update-document-title'
 import GoogleIcon from '@/icons/google.svg'
 import Logo from '@/icons/logo.svg'
 
@@ -16,6 +17,7 @@ import FormFields from './components/FormFields'
 import useSignUpForm from './hooks/use-sign-up-form'
 
 const SignUp: FC = () => {
+  useUpdatePageTitle('Network Area | Sign up')
   const { control, handleSubmit, isSubmitting, submitError } = useSignUpForm()
 
   return (

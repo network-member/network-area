@@ -9,6 +9,7 @@ import FormHelperText from '@mui/material/FormHelperText'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
+import useUpdatePageTitle from '@/hooks/use-update-document-title'
 import GoogleIcon from '@/icons/google.svg'
 import Logo from '@/icons/logo.svg'
 
@@ -16,6 +17,7 @@ import FormFields from './components/FormFields'
 import useSignInForm from './hooks/use-sign-in-form'
 
 const SignIn: FC = () => {
+  useUpdatePageTitle('Network Area | Sign in')
   const { control, handleSubmit, isSubmitting, submitError } = useSignInForm()
 
   return (
@@ -45,6 +47,7 @@ const SignIn: FC = () => {
             {submitError}
           </FormHelperText>
         )}
+
         <Button type="submit" disabled={isSubmitting} fullWidth variant="contained">
           Sign in
         </Button>
@@ -62,7 +65,7 @@ const SignIn: FC = () => {
           Sign in with Google
         </Button>
         <Typography sx={{ textAlign: 'center' }}>
-          Don{'&apos'}t have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Link
             component={RouterLink}
             to="/sign-up"

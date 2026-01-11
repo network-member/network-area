@@ -5,7 +5,7 @@ export class ApiError extends Error {
     readonly statusCode: StatusCodes,
     customMessage?: string,
   ) {
-    super(customMessage ?? getReasonPhrase(statusCode))
+    super(customMessage !== undefined && customMessage !== '' ? customMessage : getReasonPhrase(statusCode))
   }
 }
 

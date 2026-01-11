@@ -14,7 +14,11 @@ const apiClient = axios.create(axiosConfig)
 apiClient.interceptors.request.use(reqInterceptorOnFulfilled)
 apiClient.interceptors.response.use(undefined, responseInterceptorOnRejected)
 
-const login = async (loginPayload: { email: string; password: string }): Promise<void> => {
+const login = async (loginPayload: {
+  email: string
+  password: string
+  captcha: string
+}): Promise<void> => {
   const { data } = await axios.post<{ accessToken: string }>('/auth', loginPayload, {
     ...axiosConfig,
     withCredentials: true,
@@ -26,6 +30,7 @@ const signUp = async (signUpPayload: {
   email: string
   firstName: string
   lastName: string
+  captcha: string
   password: string
   passwordConfirmation: string
 }): Promise<void> => {

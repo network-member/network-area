@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { isAxiosError } from 'axios'
 
 import ApiClient from '@/api/client'
+import { useSubmitWithCaptchaGuard } from '@/components/LoginLayout'
 import useApiMutation from '@/hooks/use-api-mutation'
 
 import { FieldsValidationSchema, type FormFieldsT } from '../components/FormFields'
@@ -43,11 +44,17 @@ const useSignUpForm = (): UseSignInFormResultI => {
     onSuccess: onMutationSuccess,
   })
 
+  const submit = useSubmitWithCaptchaGuard({
+    formSubmitWrapper: handleSubmit,
+    mutation: signUp,
+    isSubmitting,
+  })
+
   return {
     control,
     isSubmitting,
     submitError,
-    handleSubmit: handleSubmit(signUp),
+    handleSubmit: submit,
   }
 }
 

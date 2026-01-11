@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { HttpStatusCode, isAxiosError } from 'axios'
 
 import ApiClient from '@/api/client'
+import { useSubmitWithCaptchaGuard } from '@/components/LoginLayout'
 import useApiMutation from '@/hooks/use-api-mutation'
 
 import { FieldsValidationSchema, type FormFieldsT } from '../components/FormFields'
@@ -26,6 +27,7 @@ const useSignInForm = (): UseSignInFormResultI => {
   } = useForm({
     resolver: zodResolver(FieldsValidationSchema),
   })
+
   const [submitError, setSubmitError] = useState<string | null>(null)
   const putSubmitError = useCallback((error: unknown) => {
     if (isAxiosError(error) && error.response?.status === HttpStatusCode.Unauthorized) {
@@ -42,12 +44,17 @@ const useSignInForm = (): UseSignInFormResultI => {
     errorHandler: putSubmitError,
     onSuccess: onMutationSuccess,
   })
+  const submit = useSubmitWithCaptchaGuard({
+    formSubmitWrapper: handleSubmit,
+    mutation: login,
+    isSubmitting,
+  })
 
   return {
     control,
     isSubmitting,
     submitError,
-    handleSubmit: handleSubmit(login),
+    handleSubmit: submit,
   }
 }
 

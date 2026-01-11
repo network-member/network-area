@@ -5,6 +5,7 @@ import Zod from 'zod'
 import { config } from 'config.js'
 import { UserService } from 'domains/user/index.js'
 import { BadRequestApiError, UnauthorizedApiError, validateApiRoutePayload } from 'errors/index.js'
+import verifyCaptcha from 'libs/yandex-smart-captcha.js'
 
 import JwtAuthService, { RefreshTokenCookieName, RefreshTokenTTL } from './jwt-auth.service.js'
 
@@ -16,12 +17,17 @@ const refreshTokenCookiePayload = {
   path: '/auth/session',
 } as const
 
-const authPayloadValidationSchema = Zod.strictObject({ email: Zod.email(), password: Zod.string().min(1) })
+const authPayloadValidationSchema = Zod.strictObject({
+  email: Zod.email(),
+  password: Zod.string().min(1),
+  captcha: Zod.string().min(1),
+})
 
 export async function handleLoginAttempt(req: Request, res: Response): Promise<Response> {
   const payload = validateApiRoutePayload(req.body, authPayloadValidationSchema)
-  const user = await UserService.getUserByCredentials(payload)
+  await verifyCaptcha({ ip: req.ip ?? '', token: payload.captcha })
 
+  const user = await UserService.getUserByCredentials(payload)
   if (user === null) throw new UnauthorizedApiError()
 
   const { accessToken, refreshToken } = await JwtAuthService.createTokensPair(req, { userId: user.id })
@@ -51,6 +57,7 @@ export const signUpPayloadValidationSchema = Zod.strictObject({
   email: Zod.email().trim(),
   firstName: Zod.string().trim(),
   lastName: Zod.string().trim(),
+  captcha: Zod.string().min(1),
   password: Zod.string().min(8),
   passwordConfirmation: Zod.string().min(8),
 }).refine((data) => data.password === data.passwordConfirmation, {
@@ -64,6 +71,7 @@ export async function handleSignUp(req: Request, res: Response): Promise<Respons
     console.error(`Detected empty IP address. params: ${JSON.stringify(payload)}`)
     throw new BadRequestApiError('Cannot recognize your IP address.')
   }
+  await verifyCaptcha({ ip: req.ip, token: payload.captcha })
 
   const user = await UserService.createUser({ ...payload, ip: req.ip })
   const { accessToken, refreshToken } = await JwtAuthService.createTokensPair(req, { userId: user.id })
