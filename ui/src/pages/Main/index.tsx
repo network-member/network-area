@@ -8,8 +8,10 @@ import Typography from '@mui/material/Typography'
 
 import ApiClient from '@/api/client'
 import useApiMutation from '@/hooks/use-api-mutation'
+import useUpdatePageTitle from '@/hooks/use-update-document-title'
 
 const Main: FC = () => {
+  useUpdatePageTitle('Network Area | Dashboard')
   const navigate = useNavigate()
   const handleLogout = async (): Promise<void> => {
     await ApiClient.logout()

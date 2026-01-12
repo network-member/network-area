@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react'
 import { type Control, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router'
+import { useNavigate, useOutletContext } from 'react-router'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { isAxiosError } from 'axios'
 
 import ApiClient from '@/api/client'
-import { useSubmitWithCaptchaGuard } from '@/components/LoginLayout'
+import { type LoginLayoutContextI, useSubmitWithCaptchaGuard } from '@/components/LoginLayout'
 import useApiMutation from '@/hooks/use-api-mutation'
 
 import { FieldsValidationSchema, type FormFieldsT } from '../components/FormFields'
@@ -19,6 +19,7 @@ interface UseSignInFormResultI {
 }
 
 const useSignUpForm = (): UseSignInFormResultI => {
+  const { remountCaptcha } = useOutletContext<LoginLayoutContextI>()
   const navigate = useNavigate()
   const {
     control,
@@ -28,13 +29,17 @@ const useSignUpForm = (): UseSignInFormResultI => {
     resolver: zodResolver(FieldsValidationSchema),
   })
   const [submitError, setSubmitError] = useState<string | null>(null)
-  const putSubmitError = useCallback((error: unknown) => {
-    if (isAxiosError<{ error: string }>(error) && error.response?.status !== undefined) {
-      return setSubmitError(error.response.data.error)
-    }
-    console.error(error)
-    return setSubmitError('Something went wrong, please try again later.')
-  }, [])
+  const putSubmitError = useCallback(
+    (error: unknown) => {
+      remountCaptcha()
+      if (isAxiosError<{ error: string }>(error) && error.response?.status !== undefined) {
+        return setSubmitError(error.response.data.error)
+      }
+      console.error(error)
+      return setSubmitError('Something went wrong, please try again later.')
+    },
+    [remountCaptcha],
+  )
   const onMutationSuccess = useCallback(async () => {
     await navigate('/')
   }, [navigate])

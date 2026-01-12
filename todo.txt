@@ -1,2 +1,1 @@
 1. Add CSP conf for UI
-2. Implement page title sync
