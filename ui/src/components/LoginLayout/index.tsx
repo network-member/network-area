@@ -29,14 +29,14 @@ const LoginLayout: FC = () => {
         <Card variant="outlined">
           <Outlet context={{ captcha, showCaptcha, remountCaptcha }} />
         </Card>
+        <InvisibleSmartCaptcha
+          sitekey="ysc1_eaLghGiGlIzqMaj1h7xwDl6aj6jLJQPwiHKEff726ea689f5"
+          key={captchaKey}
+          onSuccess={setCaptcha}
+          onChallengeHidden={() => setCaptchaVisible(false)}
+          visible={captchaVisible}
+        />
       </SignUpContainer>
-      <InvisibleSmartCaptcha
-        sitekey="ysc1_eaLghGiGlIzqMaj1h7xwDl6aj6jLJQPwiHKEff726ea689f5"
-        key={captchaKey}
-        onSuccess={setCaptcha}
-        onChallengeHidden={() => setCaptchaVisible(false)}
-        visible={captchaVisible}
-      />
     </>
   )
 }

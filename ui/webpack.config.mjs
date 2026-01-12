@@ -7,6 +7,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import path from 'node:path'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 import svgoConfig from './svgo.config.mjs'
 
@@ -102,6 +103,7 @@ const productionPlugins = [
   new CopyPlugin({
     patterns: [{ from: 'public', filter: (resourcePath) => !resourcePath.includes('.html') }],
   }),
+  // new BundleAnalyzerPlugin(),
 ]
 
 const imageMinimizerPlugin = new ImageMinimizerPlugin({

@@ -7,6 +7,7 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
 import App from './App'
+import './overwrite.css'
 
 const node = document.getElementById('root')
 
