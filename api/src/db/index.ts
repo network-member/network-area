@@ -1,8 +1,8 @@
-import KnexClient from './knex-client.js'
+import { Orm, requestEntityManagerMiddleware } from './micro-orm.js'
 import RedisClient from './redis-client.js'
 
 async function gracefulShutdown(): Promise<void> {
-  await KnexClient.destroy()
+  await Orm.close()
   RedisClient.destroy()
   process.exit(0)
 }
@@ -10,4 +10,4 @@ async function gracefulShutdown(): Promise<void> {
 process.on('SIGTERM', gracefulShutdown)
 process.on('SIGINT', gracefulShutdown)
 
-export { RedisClient, KnexClient }
+export { RedisClient, Orm, requestEntityManagerMiddleware }

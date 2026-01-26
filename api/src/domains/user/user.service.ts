@@ -1,23 +1,31 @@
+import type { EntityManager } from '@mikro-orm/core'
 import { hash, verify } from 'argon2'
 
+import { Orm } from 'db/index.js'
 import { BadRequestApiError } from 'errors/index.js'
 
-import UserQueryBuilder, { type UserI } from './user.query-builder.js'
+import UserIdentityModel from './user-identity.entity.js'
+import UserModel from './user.entity.js'
 
 interface GetUserByCredentialsArgs {
   email: string
   password: string
 }
 
-export async function getUserByCredentials({ email, password }: GetUserByCredentialsArgs): Promise<UserI | null> {
-  const user = await UserQueryBuilder().where({ email }).first()
-  if (user === undefined) return null
+export async function getUserByCredentials(
+  { email, password }: GetUserByCredentialsArgs,
+  { em }: { em: EntityManager },
+): Promise<UserModel | null> {
+  const user = await em.findOne(UserModel, { identity: { email } }, { populate: ['identity'] })
+  if (user === null) return null
 
-  const hashMatch = await verify(user.password, password)
+  const hashMatch = await verify(user.identity.$.password, password)
   if (!hashMatch) return null
 
   return user
 }
+
+await getUserByCredentials({ email: 'admin@mail.ru', password: 'admin' }, { em: Orm.em.fork() })
 
 interface CreateUserArgsI {
   email: string
@@ -27,24 +35,19 @@ interface CreateUserArgsI {
   ip: string
 }
 
-export async function createUser(args: CreateUserArgsI): Promise<UserI> {
-  const users = await UserQueryBuilder().where({ registration_ip: args.ip }).orWhere({ email: args.email })
+export async function createUser(args: CreateUserArgsI, { em }: { em: EntityManager }): Promise<UserModel> {
+  const userWithSameEmail = await em.findOne(UserModel, { identity: { email: args.email } })
+  if (userWithSameEmail !== null) throw new BadRequestApiError('User with this email address already exists.')
 
-  const ipAddressMatchCount = users.filter((user) => user.registration_ip === args.ip).length
-  if (ipAddressMatchCount >= 3) throw new BadRequestApiError('You cannot register more than 3 users per IP address.')
-
-  const emailMatch = users.some((user) => user.email === args.email)
-  if (emailMatch) throw new BadRequestApiError('User with this email address already exists.')
-
-  const [user] = await UserQueryBuilder()
-    .insert({
-      email: args.email,
-      first_name: args.firstName,
-      last_name: args.lastName,
-      password: await hash(args.password),
-      registration_ip: args.ip,
-    })
-    .returning('*')
+  const user = em.create(UserModel, {})
+  em.create(UserIdentityModel, {
+    email: args.email,
+    firstName: args.firstName,
+    lastName: args.lastName,
+    password: await hash(args.password),
+    registrationIp: args.ip,
+    user,
+  })
 
   return user
 }

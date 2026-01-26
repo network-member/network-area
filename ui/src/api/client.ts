@@ -7,7 +7,7 @@ import { reqInterceptorOnFulfilled, responseInterceptorOnRejected } from './inte
 
 const axiosConfig = {
   baseURL: apiUrl,
-  timeout: 1000,
+  timeout: 3000,
 }
 
 const apiClient = axios.create(axiosConfig)

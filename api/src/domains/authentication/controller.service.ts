@@ -27,7 +27,7 @@ export async function handleLoginAttempt(req: Request, res: Response): Promise<R
   const payload = validateApiRoutePayload(req.body, authPayloadValidationSchema)
   await verifyCaptcha({ ip: req.ip ?? '', token: payload.captcha })
 
-  const user = await UserService.getUserByCredentials(payload)
+  const user = await UserService.getUserByCredentials(payload, { em: req.em })
   if (user === null) throw new UnauthorizedApiError()
 
   const { accessToken, refreshToken } = await JwtAuthService.createTokensPair(req, { userId: user.id })
@@ -73,9 +73,10 @@ export async function handleSignUp(req: Request, res: Response): Promise<Respons
   }
   await verifyCaptcha({ ip: req.ip, token: payload.captcha })
 
-  const user = await UserService.createUser({ ...payload, ip: req.ip })
-  const { accessToken, refreshToken } = await JwtAuthService.createTokensPair(req, { userId: user.id })
+  const user = await UserService.createUser({ ...payload, ip: req.ip }, { em: req.em })
+  await req.em.flush()
 
+  const { accessToken, refreshToken } = await JwtAuthService.createTokensPair(req, { userId: user.id })
   res.cookie(RefreshTokenCookieName, refreshToken, refreshTokenCookiePayload)
   return res.status(StatusCodes.OK).send({ accessToken })
 }

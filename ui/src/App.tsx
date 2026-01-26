@@ -7,6 +7,7 @@ import ApplicationRouter from './pages'
 
 const theme = createTheme({
   palette: {
+    primary: { main: '#6366F1' },
     text: { primary: '#1E2E52' },
   },
 })

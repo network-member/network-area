@@ -1,6 +1,5 @@
 import express from 'express'
 
-import authenticate from './authenticate.middleware.js'
 import {
   handleLoginAttempt,
   handleLogoutAllAttempt,
@@ -22,7 +21,5 @@ router.post('/auth/session/logout', handleLogoutAttempt)
 router.post('/auth/session/refresh', handleRefreshTokenAttempt)
 
 router.post('/auth/logout-all', handleLogoutAllAttempt)
-
-router.use('/', authenticate)
 
 export default router
