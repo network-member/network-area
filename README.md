@@ -4,7 +4,7 @@ The idea is to have a room for projects which life cycle was handled fully on my
 
 ### Services are accessible through **https://network-area.online** 🚀
 
-api
+## API
 
 - tsx is replaced with ts-node, because now it has built-in ESM support + tsx esbuild doesn't support decorators at all, but they required for ORM models.
 
