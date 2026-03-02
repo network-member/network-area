@@ -10,7 +10,7 @@ import {
 
 const router = express.Router()
 
-//  curl -X POST -H "Content-Type: application/json" -d '{"email":"admin@mail.ru","password":"admin"}' http://localhost:3000/auth --verbose
+//  curl -X POST -H "Content-Type: application/json" -d '{"email":"admin@mail.ru","password":"admin"}' http://localhost:4000/api/auth --verbose
 router.post('/auth', handleLoginAttempt)
 
 //  curl -X POST -H "Content-Type: application/json" -d '{"email":"admin@mail.ru", "firstName": "John", "lastName": "Snow", "password":"admin123", "passwordConfirmation":"admin123"}' http://localhost:3000/sign-up --verbose

@@ -6,6 +6,7 @@ import { config } from 'config.js'
 import { UserService } from 'domains/user/index.js'
 import { BadRequestApiError, UnauthorizedApiError, validateApiRoutePayload } from 'errors/index.js'
 import verifyCaptcha from 'libs/yandex-smart-captcha.js'
+import Logger from 'logger.js'
 
 import JwtAuthService, { RefreshTokenCookieName, RefreshTokenTTL } from './jwt-auth.service.js'
 
@@ -22,6 +23,8 @@ const authPayloadValidationSchema = Zod.strictObject({
   password: Zod.string().min(1),
   captcha: Zod.string().min(1),
 })
+
+const logger = Logger.child({ name: 'authentication' })
 
 export async function handleLoginAttempt(req: Request, res: Response): Promise<Response> {
   const payload = validateApiRoutePayload(req.body, authPayloadValidationSchema)
@@ -68,7 +71,7 @@ export async function handleSignUp(req: Request, res: Response): Promise<Respons
   const payload = validateApiRoutePayload(req.body, signUpPayloadValidationSchema)
 
   if (req.ip === undefined || req.ip === '') {
-    console.error(`Detected empty IP address. params: ${JSON.stringify(payload)}`)
+    logger.error(`Detected empty IP address. params: ${JSON.stringify(payload)}`)
     throw new BadRequestApiError('Cannot recognize your IP address.')
   }
   await verifyCaptcha({ ip: req.ip, token: payload.captcha })
