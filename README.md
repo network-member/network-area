@@ -6,6 +6,8 @@ The idea is to have a room for projects which life cycle was handled fully on my
 
 ## API
 
-- tsx is replaced with ts-node, because now it has built-in ESM support + tsx esbuild doesn't support decorators at all, but they required for ORM models.
+- tsx is replaced with ts-node, because now it has built-in ESM support + tsx esbuild doesn't support decorators at all, but they required for ORM models;
 
-- native ts-node esm loader is extended in order to resolve project absolute paths
+- native ts-node esm loader is extended in order to resolve project absolute paths;
+
+- [pino logger](https://getpino.io) is implemented for structured and contextual logging. ALS is used to store / pull `traceId`;
