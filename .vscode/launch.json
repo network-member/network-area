@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "API: npm run api:start",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "api:start"],
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "console": "integratedTerminal",
+      "autoAttachChildProcesses": true,
+
+      "serverReadyAction": {
+        "pattern": "App running @ (.+)",
+        "uriFormat": "%s",
+        "killOnServerStop": true,
+        "action": "openExternally"
+      }
+    }
+  ]
+}

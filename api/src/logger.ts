@@ -11,10 +11,10 @@ const logger = pino({
   name: 'root',
   mixin: (opts: { traceId?: string }) => {
     if (typeof opts.traceId === 'string') return opts
-    const context = storage.getStore()
+    const context = getContextualLoggerStore()
 
     invariant(context !== undefined, 'Logger is called from outside of the ALS context')
-    return { ...opts, traceId: context.traceId }
+    return { ...opts, ...context }
   },
   level: 'debug',
   transport: {
@@ -25,7 +25,11 @@ const logger = pino({
   },
 })
 
-export function loggerMiddleware(req: Request, res: Response, next: NextFunction): void {
+export function getContextualLoggerStore(): { traceId: string } | undefined {
+  return storage.getStore()
+}
+
+export function contextualLoggerMiddleware(req: Request, res: Response, next: NextFunction): void {
   const start = Date.now()
   const traceId = randomUUID()
 
@@ -55,6 +59,11 @@ export function loggerMiddleware(req: Request, res: Response, next: NextFunction
   })
 
   storage.run({ traceId }, next)
+}
+
+export function withContextualLogger<T>(fn: (...args: unknown[]) => T): T {
+  const traceId = randomUUID()
+  return storage.run({ traceId }, fn)
 }
 
 export default logger

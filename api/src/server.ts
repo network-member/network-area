@@ -6,12 +6,12 @@ import { config } from 'config.js'
 
 import { requestEntityManagerMiddleware } from './db/index.js'
 import { rootErrorsHandler } from './errors/index.js'
-import { loggerMiddleware } from './logger.js'
+import { contextualLoggerMiddleware } from './logger.js'
 import ApiRouter from './routes/api.js'
 
 const app = express()
 
-app.use(loggerMiddleware)
+app.use(contextualLoggerMiddleware)
 app.use(express.json())
 app.use(cookieParser())
 app.use(requestEntityManagerMiddleware)
@@ -21,5 +21,5 @@ app.use('/api', ApiRouter)
 app.use(rootErrorsHandler)
 
 app.listen(config.port, () => {
-  console.log(`App running @ http://::${config.port}`)
+  console.log(`App running @ http://localhost:${config.port}`)
 })

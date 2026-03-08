@@ -6,6 +6,9 @@ import type { NextFunction, Request, Response } from 'express'
 import 'reflect-metadata'
 
 import { config } from 'config.js'
+import Logger, { getContextualLoggerStore } from 'logger.js'
+
+const logger = Logger.child({ name: 'mikro-orm' })
 
 const ormConfig = defineConfig({
   clientUrl: config.pgUrl,
@@ -14,6 +17,11 @@ const ormConfig = defineConfig({
   entities: ['build/**/*.entity.js'],
   entitiesTs: ['src/domains/**/*.entity.ts'],
   debug: true,
+  logger: (message) => {
+    const context = getContextualLoggerStore()
+    const loggerBindings = context ?? { traceId: 'mikro-orm' }
+    logger.debug({ ...loggerBindings }, message)
+  },
   seeder: {
     path: 'build/db/seeders', // path to the folder with seeders
     pathTs: 'src/db/seeders', // path to the folder with TS seeders (if used, you should put path to compiled files in `path`)

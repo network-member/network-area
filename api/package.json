@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "_ts-node": "node --loader ./esm-loader.mjs --env-file=.env --enable-source-maps",
-    "start:dev": "npm run _ts-node src/server.ts",
+    "start:dev": "npm run _ts-node -- --no-deprecation --disable-warning=ExperimentalWarning src/server.ts",
     "build": "rimraf ./build && tsc && tsc-alias",
     "start": "node --enable-source-maps --env-file=.env build/server.js",
     "check-types": "tsc --noEmit",
