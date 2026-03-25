@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Get, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 
 import { AppService } from './app.service.js'
@@ -13,8 +13,6 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    const a = this.configService.get<number>('pgUrl')
-    console.log(a)
     return this.appService.getHello()
   }
 }
