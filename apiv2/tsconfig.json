@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    // Runtime/module setup for Node ESM.
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "esnext",
+    "verbatimModuleSyntax": true,
+    "resolvePackageJsonExports": true,
+
+    // Interop with CommonJS and default imports.
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    // NestJS currently relies on legacy decorators metadata.
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    // Emit/build outputs.
+    "declaration": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "outDir": "./dist",
+
+    // Type checking strictness and correctness.
+    "isolatedModules": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Performance / developer experience.
+    "incremental": true,
+    "skipLibCheck": true,
+
+    // Project import resolution root.
+    "baseUrl": "./src",
+  }
+}

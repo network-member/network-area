@@ -35,7 +35,7 @@ export default defineConfig(
     },
   },
   {
-    files: ['api/**/*.{js,mjs,ts,tsx}'],
+    files: ['api/**/*.{js,mjs,ts,tsx}', 'apiv2/**/*.{js,mjs,ts,tsx}'],
     languageOptions: {
       globals: globals.node,
     },
@@ -54,6 +54,12 @@ export default defineConfig(
     },
     rules: {
       'no-alert': 'off',
+    },
+  },
+  {
+    files: ['**/*.test.ts'],
+    languageOptions: {
+      globals: globals.jest,
     },
   },
 )

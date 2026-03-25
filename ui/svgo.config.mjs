@@ -7,7 +7,10 @@ const config = {
     {
       name: 'preset-default',
     },
-    { name: 'addAttributesToSVGElement', params: { attributes: [{ xmlns: 'http://www.w3.org/2000/svg' }] } },
+    {
+      name: 'addAttributesToSVGElement',
+      params: { attributes: [{ xmlns: 'http://www.w3.org/2000/svg' }] },
+    },
   ],
 }
 

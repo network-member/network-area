@@ -5,4 +5,4 @@
 5. Integrate yandex object storage for user documents
 6. Check logout failure in https scope
 
-// Read about decorators
+// Check integrated browser AI agent support
