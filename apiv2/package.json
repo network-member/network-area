@@ -7,11 +7,12 @@
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
+    "_ts-node": "node --loader ./esm-loader.mjs",
     "build": "nest build && tsc-alias",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start:dev": "nest start --watch --exec \"node --loader ./esm-loader.mjs\"",
-    "orm": "npm run _ts-node -- ../node_modules/.bin/mikro-orm",
-    "start:prod": "node dist/main"
+    "start:dev": "nest start --watch --exec \"npm run _ts-node --\"",
+    "orm": "npm run _ts-node -- --env-file=.env ../node_modules/@mikro-orm/cli/cli.js",
+    "start:prod": "node dist/main.js"
   },
   "dependencies": {
     "@mikro-orm/cli": "^7.0.4",

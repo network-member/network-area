@@ -3,7 +3,6 @@ import { Entity, OneToOne, PrimaryKey, Property } from '@mikro-orm/decorators/le
 
 import User from './user.entity.js'
 
-console.log(Reflect.metadata)
 @Entity({ tableName: 'user_identities' })
 export default class UserIdentity {
   [OptionalProps]?: 'updatedAt' | 'createdAt' | 'userId'

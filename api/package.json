@@ -16,10 +16,10 @@
     "db:wipe-data": "npm run orm:cli -- schema:fresh --seed --run"
   },
   "dependencies": {
-    "@mikro-orm/core": "^6.6.4",
-    "@mikro-orm/migrations": "^6.6.4",
-    "@mikro-orm/postgresql": "^6.6.4",
-    "@mikro-orm/seeder": "^6.6.4",
+    "@mikro-orm/core": "^7.0.5",
+    "@mikro-orm/migrations": "^7.0.5",
+    "@mikro-orm/postgresql": "^7.0.5",
+    "@mikro-orm/seeder": "^7.0.5",
     "argon2": "^0.44.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -35,7 +35,7 @@
     "zod": "^4.2.1"
   },
   "devDependencies": {
-    "@mikro-orm/cli": "^6.6.4",
+    "@mikro-orm/cli": "^7.0.5",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
